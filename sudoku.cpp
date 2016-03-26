@@ -18,15 +18,21 @@ for(int i=0;i<81;i++)
 	mapin[i]=map[i];
 }
 
+void Sudo::reanIn(){
+
+}
+
 void Sudo::giveQuestion(int mapin[]){
+	srand(time(NULL));
 	for(int i=0;i<81;i++){
-		srand(time(NULL));
 		int random_num=rand()%10;
 		if(mapin[i]==random_num) mapin[i]=0;
 		if(mapin[i]==random_num+1) mapin[i]=0;
 		if(mapin[i]==random_num-1) mapin[i]=0;
-		if(mapin[i]==random_num+2) mapin[i]=0;
-		if(mapin[i]==random_num-2) mapin[i]=0;
+	}
+	for(int i=0;i<81;i++){
+		cout<<mapin[i]<<" ";
+		if(i%9==8) cout<<endl;
 	}
 }
 

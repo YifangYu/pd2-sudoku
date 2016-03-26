@@ -8,4 +8,4 @@ giveQuestion.o: giveQuestion.cpp sudoku.h
 	g++ -c giveQuestion.cpp
 
 clean:
-	rm Sudo *.o
+	rm sudo *.o
