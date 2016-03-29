@@ -1,7 +1,8 @@
 #include<iostream>
-using namespace std;
+#include"Sudoku.h"
 int main(){
 	Sudoku ss;
 	ss.readIn();
-	ss.solve();
+	ss.transform();
+	return 0;
 }

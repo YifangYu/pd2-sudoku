@@ -1,12 +1,10 @@
 #include<iostream>
-#include"sudoku.h"
+#include"Sudoku.h"
 using namespace std;
 
 int main(){
-	Sudo su;
-	int map[81];
-	su.Map(map);
-	su.flip(map,1);	
-	su.giveQuestion(map);
+	Sudoku su;		
+
+	su.giveQuestion();
 	return 0;
 }

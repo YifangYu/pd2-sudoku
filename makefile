@@ -1,11 +1,9 @@
-Sudo: sudoku.o giveQuestion.o
-	g++ -o sudo sudoku.o giveQuestion.o
+All: Sudoku.o giveQuestion.o transform.cpp
+	g++ -o giveQuestion Sudoku.o giveQuestion.cpp
+	g++ -o transform Sudoku.o transform.cpp
 
-sudoku.o: sudoku.cpp sudoku.h
-	g++ -c sudoku.cpp
+Sudoku.o: Sudoku.cpp Sudoku.h
+	g++ -c Sudoku.cpp -o Sudoku.o
 	
-giveQuestion.o: giveQuestion.cpp sudoku.h
-	g++ -c giveQuestion.cpp
-
 clean:
 	rm sudo *.o
