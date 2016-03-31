@@ -11,6 +11,7 @@ class Sudoku{
 		void changeRow();
 		void changeCol();
 		void flip(int i);
+		void solve();
 	private:
 		vector<int> mapin;
 };
