@@ -12,6 +12,11 @@ class Sudoku{
 		void changeCol();
 		void flip(int i);
 		void solve();
+		int ProbMapPoint(int *in, int i, int j);
+		int ProbMap(int *in,int *out);
+		int ProbNum(int *in, int i, int j);
+		void ModifiedMap(int *inMap,int *inProMap);
+	
 	private:
 		vector<int> mapin;
 };

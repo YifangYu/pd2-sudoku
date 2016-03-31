@@ -124,7 +124,7 @@ void Sudoku::flip(int i){
 }
 }
 
-int ProbMapPoint(int *in, int i, int j){
+int Sudoku::ProbMapPoint(int *in, int i, int j){
 	bool total[9];
 	int count=0;
 	int v_min,v_max,h_min,h_max;
@@ -174,7 +174,7 @@ int ProbMapPoint(int *in, int i, int j){
 	return count;
 }
 
-int ProbMap(int *in,int *out){
+int Sudoku::ProbMap(int *in,int *out){
 	int tmp=0;
 	for(int i=0;i<9;i++){
 		for(int j=0;j<9;j++){
@@ -185,7 +185,7 @@ int ProbMap(int *in,int *out){
 	return tmp;
 }
 
-int ProbNum(int *in, int i, int j){
+int Sudoku::ProbNum(int *in, int i, int j){
 	bool total[9];
 	int v_min,v_max,h_min,h_max;
 	if(in[9*i+j]!=0)
@@ -234,7 +234,7 @@ int ProbNum(int *in, int i, int j){
 	
 }
 
-void ModifiedMap(int *inMap,int *inProMap){
+void Sudoku::ModifiedMap(int *inMap,int *inProMap){
 	for(int i=0;i<9;i++){
 		for(int j=0;j<9;j++){
 			if(inProMap[i*9+j]==1){
@@ -249,7 +249,10 @@ void Sudoku::solve(){
 	for(int i=1;i<9;i++){
 		for(int j=1;j<9;j++){
 			sudo[i][j]=mapin[i*9+j];}}
-	
+#ifdef DEBUG
+	cout<<"NO"<<endl;
+#endif 
+
 	int tmp=1;
 	for(int i=1;;i++){
 		tmp=ProbMap(*sudo,*p);
