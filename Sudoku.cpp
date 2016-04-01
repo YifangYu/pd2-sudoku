@@ -45,7 +45,7 @@ void Sudoku::giveQuestion(){
 
 void Sudoku::transform(){
 	srand(time(NULL));
-	int num=rand()%5;
+	int num=rand()%6;
 	if (num==1)		 flip(num);
 	else if (num==2) changeCol();
 	else if (num==3) changeRow();
@@ -122,6 +122,37 @@ void Sudoku::flip(int i){
 		mapin[i]=mapin[i+2];
 		mapin[i+2]=tmp;}
 }
+}
+
+void Sudoku::rotate(int n){
+	int tmp[9][9],ret[9][9];
+	int count=0;
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			tmp[i][j]=mapin[i*9+j];
+		}
+	}
+
+	while(count<n){
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			ret[i][j]=tmp[8-j][i];	
+		}
+	}
+
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			tmp[i][j]=ret[i][j];
+		}
+	}
+		count++;
+	}
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			cout<<ret[i][j]<<" ";
+		}
+		cout<<endl;
+	}
 }
 
 int Sudoku::ProbMapPoint(int *in, int i, int j){

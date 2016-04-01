@@ -12,6 +12,7 @@ class Sudoku{
 		void changeCol();
 		void flip(int i);
 		void solve();
+		void rotate(int n);
 		int ProbMapPoint(int *in, int i, int j);
 		int ProbMap(int *in,int *out);
 		int ProbNum(int *in, int i, int j);
