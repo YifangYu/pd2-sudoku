@@ -3,6 +3,6 @@
 int main(){
 	Sudoku ss;
 	ss.readIn();
-	ss.rotate(2);	
+	ss.transform();	
 	return 0;
 }

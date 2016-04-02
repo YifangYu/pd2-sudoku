@@ -1,4 +1,4 @@
-All: Sudoku.o giveQuestion.o transform.cpp solve.cpp
+All: Sudoku.o giveQuestion.o transform.cpp 
 	g++ -o giveQuestion Sudoku.o giveQuestion.cpp
 	g++ -o transform Sudoku.o transform.cpp
 	g++ -o solve Sudoku.o solve.cpp

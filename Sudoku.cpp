@@ -30,12 +30,28 @@ void Sudoku::readIn(){
 
 void Sudoku::giveQuestion(){
 	srand(time(NULL));
+	int num=rand()%5;
+	if (num==1)		 flip(num);
+	else if (num==2) changeCol();
+	else if (num==3) changeRow();
+	else if (num==4) changeNum(); 
+	else if (num==0) flip(num);
 	for(int i=0;i<81;i++){
 		int random_num=rand()%10;
 		if(mapin.at(i)==random_num) mapin.at(i)=0;
 		if(mapin.at(i)==random_num+1) mapin.at(i)=0;
 		if(mapin.at(i)==random_num-1) mapin.at(i)=0;
+		if(mapin.at(i)==random_num-2) mapin.at(i)=0;
+		if(mapin.at(i)==random_num+2) mapin.at(i)=0;
+
 	}
+	int num2=rand()%5;
+	if (num2==1)		 flip(num2);
+	else if (num2==2) changeCol();
+	else if (num2==3) changeRow();
+	else if (num2==4) changeNum(); 
+	else if (num2==0) flip(num2);
+	rotate(num2);
 	mapin.resize(81);
 	for(int i=0;i<81;i++){
 		cout<<mapin[i]<<" ";
@@ -45,15 +61,23 @@ void Sudoku::giveQuestion(){
 
 void Sudoku::transform(){
 	srand(time(NULL));
-	int num=rand()%6;
-	if (num==1)		 flip(num);
-	else if (num==2) changeCol();
-	else if (num==3) changeRow();
-	else if (num==4) changeNum(); 
-	else if (num==0) flip(num);
+	int num=rand()%2,rot=rand()%10+1;
+	int k=0;
+	while(k<rot){
+	flip(num);
+	changeCol();
+	rotate(rot);
+	k++;
+	}
+	int choose=rand()%5;
+	if (choose==1)		 flip(choose);
+	else if (choose==2) changeCol();
+	else if (choose==3) changeRow();
+	else if (choose==4) changeNum(); 
+	else if (choose==0) flip(choose);
 	for(int i=0;i<81;i++){
-		cout<<mapin[i]<<" ";
-		if(i%9==8) cout<<endl;
+	cout<<mapin[i]<<" ";
+	if(i%9==8) cout<<endl;
 	}
 }
 
@@ -147,142 +171,15 @@ void Sudoku::rotate(int n){
 	}
 		count++;
 	}
-	for(int i=0;i<9;i++){
-		for(int j=0;j<9;j++){
-			cout<<ret[i][j]<<" ";
-		}
-		cout<<endl;
-	}
-}
-
-int Sudoku::ProbMapPoint(int *in, int i, int j){
-	bool total[9];
-	int count=0;
-	int v_min,v_max,h_min,h_max;
-	if(in[9*i+j]!=0)
-		return 0;
-
-	//initial
-	for(int k=0;k<9;k++)
-	total[k]=true;
-
-	//virtical
-	for(int k=0;k<9;k++)
-	if(in[9*k+j]!=0)
-		total[in[k*9+j]-1]=false;
-
-	//horizontal
-	for(int k=0;k<9;k++)
-	if(in[9*i+k]!=0)
-		total[in[i*9+k]-1]=false;
-
-	//square
-	if(i<3){
-		v_min=0;v_max=3;
-	}else if(i<6){
-		v_min=3;v_max=6;
-	}else {
-		v_min=6;v_max=9;
-	}
-
-	if(j<3){
-		h_min=0;h_max=3;
-	}else if(j<6){
-		h_min=3;h_max=6;
-	}else{
-		h_min=6;h_max=9;
-	}
-
-	for(int v=v_min;v<v_max;v++)
-		for(int h=h_min;h<h_max;h++)
-			if(in[v*9+h]!=0)
-				total[in[v*9+h]-1]=false;
 	
-	count=0;
-	for(int i=0;i<9;i++)
-		if(total[i])
-			count++;
-	return count;
-}
-
-int Sudoku::ProbMap(int *in,int *out){
-	int tmp=0;
-	for(int i=0;i<9;i++){
-		for(int j=0;j<9;j++){
-			out[9*i+j]=ProbMapPoint(in,i,j);
-			tmp=(out[9*i+j]==1)?1:tmp;
-		}
-	}
-	return tmp;
-}
-
-int Sudoku::ProbNum(int *in, int i, int j){
-	bool total[9];
-	int v_min,v_max,h_min,h_max;
-	if(in[9*i+j]!=0)
-		return 0;
-
-	//initial
-	for(int k=0;k<9;k++)
-	total[k]=true;
-
-	//virtical
-	for(int k=0;k<9;k++)
-	if(in[9*k+j]!=0)
-		total[in[k*9+j]-1]=false;
-
-	//horizontal
-	for(int k=0;k<9;k++)
-	if(in[9*i+k]!=0)
-		total[in[i*9+k]-1]=false;
-
-	//square
-	if(i<3){
-		v_min=0;v_max=3;
-	}else if(i<6){
-		v_min=3;v_max=6;
-	}else {
-		v_min=6;v_max=9;
-	}
-
-	if(j<3){
-		h_min=0;h_max=3;
-	}else if(j<6){
-		h_min=3;h_max=6;
-	}else{
-		h_min=6;h_max=9;
-	}
-
-	for(int v=v_min;v<v_max;v++)
-		for(int h=h_min;h<h_max;h++)
-			if(in[v*9+h]!=0)
-				total[in[v*9+h]-1]=false;
-	
-	for(int i=0;i<9;i++)
-		if(total[i])
-			return i+1;
-	return 10;
-	
-}
-
-void Sudoku::ModifiedMap(int *inMap,int *inProMap){
-	for(int i=0;i<9;i++){
-		for(int j=0;j<9;j++){
-			if(inProMap[i*9+j]==1){
-				inMap[i*9+j]=ProbNum(inMap,i,j);}
-		}
-	}
 }
 
 void Sudoku::solve(){
 	int p[9][9],sudo[9][9];
 	//transform 1D to 2D
-	for(int i=1;i<9;i++){
-		for(int j=1;j<9;j++){
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
 			sudo[i][j]=mapin[i*9+j];}}
-#ifdef DEBUG
-	cout<<"NO"<<endl;
-#endif 
 
 	int tmp=1;
 	for(int i=1;;i++){
@@ -290,10 +187,9 @@ void Sudoku::solve(){
 		ModifiedMap(*sudo,*p);
 	if(tmp==0) break;
 	}
-
 	//transform 2D to 1D
-	for(int i=1;i<9;i++){
-		for(int j=1;j<9;j++){
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
 			mapin[i*9+j]=sudo[i][j];}}
 	
 	//check if unsolvable
