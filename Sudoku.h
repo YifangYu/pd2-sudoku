@@ -7,9 +7,9 @@ class Sudoku{
 		void readIn();
 		void giveQuestion();
 		void transform();
-		void changeNum();
-		void changeRow();
-		void changeCol();
+		void changeNum(int a,int b);
+		void changeRow(int a,int b);
+		void changeCol(int a,int b);
 		void flip(int i);
 		void solve();
 		void rotate(int n);

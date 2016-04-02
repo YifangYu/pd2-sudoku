@@ -30,12 +30,7 @@ void Sudoku::readIn(){
 
 void Sudoku::giveQuestion(){
 	srand(time(NULL));
-	int num=rand()%5;
-	if (num==1)		 flip(num);
-	else if (num==2) changeCol();
-	else if (num==3) changeRow();
-	else if (num==4) changeNum(); 
-	else if (num==0) flip(num);
+	changeNum(rand()%9+1,rand()%9+1); 
 	for(int i=0;i<81;i++){
 		int random_num=rand()%10;
 		if(mapin.at(i)==random_num) mapin.at(i)=0;
@@ -45,13 +40,10 @@ void Sudoku::giveQuestion(){
 		if(mapin.at(i)==random_num+2) mapin.at(i)=0;
 
 	}
-	int num2=rand()%5;
-	if (num2==1)		 flip(num2);
-	else if (num2==2) changeCol();
-	else if (num2==3) changeRow();
-	else if (num2==4) changeNum(); 
-	else if (num2==0) flip(num2);
-	rotate(num2);
+	changeRow(rand()%3,rand()%3);
+	changeCol(rand()%3,rand()%3);
+	changeNum(rand()%9+1,rand()%9+1); 
+	rotate(rand()%4+1);
 	mapin.resize(81);
 	for(int i=0;i<81;i++){
 		cout<<mapin[i]<<" ";
@@ -61,50 +53,154 @@ void Sudoku::giveQuestion(){
 
 void Sudoku::transform(){
 	srand(time(NULL));
-	int num=rand()%2,rot=rand()%10+1;
 	int k=0;
+	int rot=rand()%10+1;
 	while(k<rot){
-	flip(num);
-	changeCol();
+	changeCol(rand()%3,rand()%3);
 	rotate(rot);
 	k++;
 	}
-	int choose=rand()%5;
-	if (choose==1)		 flip(choose);
-	else if (choose==2) changeCol();
-	else if (choose==3) changeRow();
-	else if (choose==4) changeNum(); 
-	else if (choose==0) flip(choose);
+
+	changeCol(rand()%3,rand()%3);
+	changeRow(rand()%3,rand()%3);
+	changeNum(rand()%9+1,rand()%9+1); 
+	
 	for(int i=0;i<81;i++){
 	cout<<mapin[i]<<" ";
 	if(i%9==8) cout<<endl;
 	}
 }
 
-void Sudoku::changeNum(){
+void Sudoku::changeNum(int a,int b){
 	for(int i=0;i<81;++i){
-		if(mapin[i]==5) mapin[i]=mapin[i]+2;
-		else if(mapin[i]==7) mapin[i]=mapin[i]-2;
+		if(mapin[i]==a) mapin[i]=b;
+		else if(mapin[i]==b) mapin[i]=a;
 	}
 }
 
-void Sudoku::changeRow(){
+void Sudoku::changeRow(int a,int b){
 	int tmp;
-	for(int i=27;i<54;i++){
-		tmp=mapin[i];
-		mapin[i]=mapin[i+27];
-		mapin[i+27]=tmp;
-	}
-}
-
-void Sudoku::changeCol(){
-	int tmp;
-	for(int i=0;i<75;i+=9){
-		for(int j=0;j<3;j++){
-			tmp=mapin[i+j];
-			mapin[i+j]=mapin[i+j+6];
-			mapin[i+j+6]=tmp;
+	if(a==0){
+		if(b==1){
+			for(int i=0;i<27;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+27];
+				mapin[i+27]=tmp;
+			}
 		}
+		else if(b==2){
+			for(int i=0;i<27;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+54];
+				mapin[i+54]=tmp;
+			}
+		}
+	}
+
+	if(b==0){
+		if(a==1){
+			for(int i=0;i<27;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+27];
+				mapin[i+27]=tmp;
+			}
+		}
+		else if(b==2){
+			for(int i=0;i<27;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+54];
+				mapin[i+54]=tmp;
+			}
+		}
+	}
+
+	if(a==1){
+		if(b==2){
+			for(int i=27;i<54;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+27];
+				mapin[i+27]=tmp;
+			}
+		}
+	}
+
+	if(b==1){
+		if(a==2){
+			for(int i=27;i<54;i++){
+				tmp=mapin[i];
+				mapin[i]=mapin[i+27];
+				mapin[i+27]=tmp;
+			}
+		}
+	}
+}
+
+void Sudoku::changeCol(int a,int b){
+	int tmp;
+	if(a==0){
+		if(b==1){
+			for(int i=0;i<75;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+3];
+					mapin[i+j+3]=tmp;
+				}
+			}
+		}
+		else if(b==2){
+			for(int i=0;i<75;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+6];
+					mapin[i+j+6]=tmp;		
+				}
+			}
+		}
+	}
+
+	if(b==0){
+		if(a==1){
+			for(int i=0;i<75;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+3];
+					mapin[i+j+3]=tmp;
+				}
+			}
+		}
+		else if(a==2){
+			for(int i=0;i<75;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+6];
+					mapin[i+j+6]=tmp;		
+				}
+			}
+		}
+	}
+
+	if(a==1){
+		if(b==2){
+			for(int i=3;i<78;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+3];
+					mapin[i+j+3]=tmp;		
+				}
+			}
+		}	
+	}
+
+	if(b==1){
+		if(a==2){
+			for(int i=3;i<78;i+=9){
+				for(int j=0;j<3;j++){
+					tmp=mapin[i+j];
+					mapin[i+j]=mapin[i+j+3];
+					mapin[i+j+3]=tmp;		
+				}
+			}
+		}	
 	}
 }
 
