@@ -272,6 +272,7 @@ void Sudoku::rotate(int n){
 
 void Sudoku::solve(){
 	int p[9][9],sudo[9][9];
+	int check=0;
 	//transform 1D to 2D
 	for(int i=0;i<9;i++){
 		for(int j=0;j<9;j++){
@@ -289,19 +290,36 @@ void Sudoku::solve(){
 			mapin[i*9+j]=sudo[i][j];}}
 	
 	//check if unsolvable
+	int arr[9]={0,0,0,0,0,0,0,0,0};
 	for(int i=0;i<81;i++){
 		if (mapin[i]==10){
 			cout<<"0"<<endl;
-			break;}
+			check=1;
+			break;
+		}
 	}
 
+	for(int i=0;i<9;i++){
+		for(int j=0;j<9;j++){
+			++arr[mapin[i*9+j]-1];
+		}
+	}
+	for(int i=0;i<9;i++)
+		if(arr[i]==2){
+			cout<<"0"<<endl;
+			check=1;
+		}
+	if(check==1) exit(1);
 	//check if more than one answer
+	
 	for(int i=0;i<81;i++){
 		if (mapin[i]==0){
 			cout<<"2"<<endl;
+			check=1;
 			break;}
-	}
 
+	}
+	if(check==1) exit(1);
 	//print the answer
 	cout<<"1"<<endl;
 	for(int i=0;i<81;i++){
